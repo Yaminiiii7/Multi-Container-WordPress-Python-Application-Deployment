@@ -53,7 +53,7 @@ In this hands-on, you'll learn how to install, configure and run multiple servic
     ```
     Winget will download Terraform, installs it, add it to your PATH automatically.
 
-#### Create main.tf file and add the following.
+4. Create main.tf file and add the following.
 ```
 provider "aws" {
     region = "us-west-2"  
@@ -113,39 +113,39 @@ resource "aws_instance" "ec2" {
 ```
 5.  Create EC2 with following commands in the CLI.
 
-    ```
-        terraform init
-        terraform plan
-        terraform apply
+```
+terraform init
+terraform plan
+terraform apply
 
-    ```
+```
 
 ---
 
- #### **Connect to EC2 Instance**
-Use SSH to connect to the instance's public IP address.
+#### **Connect to EC2 Instance**
+1. Use SSH to connect to the instance's public IP address.
 ```bash
-        ssh -i /path/to/key.pem ubuntu@<ec2-public-ip>
+ssh -i /path/to/key.pem ubuntu@<ec2-public-ip>
 ```
 
 
- ####   **Update System Packages:**
+2. Update System Packages:
 ```bash
-        sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 ```
 
- ####   **Install Git, Docker, and Docker Compose:**
+3. Install Git, Docker, and Docker Compose:**
 ```bash
         sudo apt install git docker.io docker-compose-v2 -y
 ```
 
- ####  **Start and Enable Docker:**
+4. Start and Enable Docker:**
 ```bash
         sudo systemctl start docker
         sudo systemctl enable docker
 ```
 
- ####  **Add User to Docker Group (to run docker without sudo):**
+5. Add User to Docker Group (to run docker without sudo):**
 ```bash
         sudo usermod -aG docker $USER
         newgrp docker
@@ -394,3 +394,9 @@ docker images
 docker volume ls
 docker network ls
 ```
+
+## Note: 
+This Docker Compose configuration uses a user-defined bridge network (wp-net) instead of Docker’s default bridge to achieve stronger isolation and automatic DNS-based service discovery. Both the MySQL container (db-ctr) and the WordPress container (wp-ctr) are attached to this network, enabling WordPress to connect to the database securely via db-ctr:3306 without exposing MySQL to the host system. From the EC2 host, only services with explicitly published ports are reachable—WordPress at `http://<EC2-IP>:8080` and the Python upload application at `http://<EC2-IP>:8081` —while the database remains internal and protected.
+
+Within the wp-net network, containers communicate using their Docker Compose service names, thanks to Docker’s built-in DNS. In this setup, MySQL is accessible internally as db-ctr, WordPress as wp-ctr, and WordPress connects to MySQL using db-ctr:3306. These service names function as internal hostnames and cannot be resolved or accessed from outside the Docker network.
+
