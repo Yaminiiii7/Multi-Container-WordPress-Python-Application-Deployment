@@ -1,0 +1,47 @@
+version: '3'  # Docker Compose file format version
+
+services:
+  db-ctr:  # MySQL database container
+    image: mysql:5.7  # Uses MySQL 5.7 image
+    volumes:
+      - db-vol:/var/lib/mysql  # Stores MySQL data in a named volume
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress  # Root user password
+      MYSQL_DATABASE: wordpress       # Name of the default database
+      MYSQL_USER: devopscloudbootcamp  # Database user
+      MYSQL_PASSWORD: devopscloudbootcamp  # User's password
+    networks:
+      - wp-net  # Connects to the 'wp-net' custom network
+    restart: always  # Automatically restarts if the container stops
+
+  wp-ctr:  # WordPress web application
+    image: wordpress:latest  # Uses the latest WordPress image
+    ports:
+      - "8080:80"  # Maps port 8080 on host to port 80 in the container
+    environment:
+      WORDPRESS_DB_HOST: db-ctr:3306  # Host and port of the MySQL service
+      WORDPRESS_DB_USER: devopscloudbootcamp  # DB username
+      WORDPRESS_DB_PASSWORD: devopscloudbootcamp  # DB password
+      WORDPRESS_DB_NAME: wordpress  # WordPress DB name
+    networks:
+      - wp-net  # Connects to the same network as MySQL
+    restart: always  # Auto-restart on failure or reboot
+    depends_on:
+      - db-ctr  # Ensures the database starts before WordPress
+
+  py-upload-app-ctr:  # Custom Python upload application
+    build:            # The image for this conteiner will not come from Docker Hub
+      context: .  # Build context is the current directory
+      dockerfile: Dockerfile  # Uses the specified Dockerfile
+    ports:
+      - "8081:3000"  # Maps port 8081 on host to port 3000 in container
+    volumes:
+      - upload-files:/app/uploads  # Mounts a named volume for uploaded files
+    restart: always  # Automatically restarts if stopped
+
+volumes:
+  db-vol: {}  # Named volume for MySQL data
+  upload-files: {}  # Named volume for uploaded files
+
+networks:
+  wp-net: {}  # Custom network for WordPress and MySQL communication
