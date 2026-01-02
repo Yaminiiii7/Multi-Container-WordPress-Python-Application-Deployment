@@ -175,43 +175,7 @@ docker volume ls
 docker volume rm <volume-name>
 ```
 
-## Step 02 - Installing Docker Compose on Linux:
-
-Follow the [official Docker Compose Installation Guide.](https://docs.docker.com/compose/install/linux/)
-
-<aside>
-💡
-
-EC2 with Ubuntu 22.04 or higher, Docker Compose is already installed!
-
-</aside>
-
-```bash
-docker compose version
-
-# Docker Compose Installation Commands (Optional)
-sudo apt-get update
-sudo apt-get install docker-compose-plugin
-```
-
-## Step 03 - Creating a directory for Docker-Compose
-
-```bash
-mkdir docker-compose && cd docker-compose
-
-# The same Python "Upload Application" Files
-wget https://tcb-bootcamps.s3.amazonaws.com/tcb5001-devopscloud-bootcamp/v2/module5-docker/files/module5-docker.zip
-
-unzip module5-docker.zip
-cd handsontask/volumes
-
-cat Dockerfile
-cat requirements.txt  # Flask
-
-touch docker-compose.yaml
-```
-
-## Step 04 - Docker Compose YAML file
+## Step 02 - Docker Compose YAML file
 
 📄 `docker-compose.yaml`
 
@@ -266,29 +230,29 @@ networks:
 
 ```
 
-## Step 05 - Running Docker Compose
+## Step 03 - Running Docker Compose
 
 ```bash
 # Builds, (if needed) and starts all containers defined in the docker-compose.yml file
 docker compose up
 
-# Thi command will "freeze" the terminal
+# This command will "freeze" the terminal
 ```
 
 ***We have lost access to the terminal, as Docker Compose was not run in detached mode.***
 
-## Step 06 - Stopping Docker Compose
+## Step 04 - Stopping Docker Compose
 
 - Stop your Docker Compose with `CTRL + C`
 
-## Step 07 - Running Docker Compose in detached mode
+## Step 05 - Running Docker Compose in detached mode
 
 ```bash
 # Builds (if needed) and starts all containers in detached (background) mode
 docker compose up -d
 ```
 
-## Step 08 - Checking the Status of Docker Compose Services
+## Step 06 - Checking the Status of Docker Compose Services
 
 ```bash
 # Lists the status of All Containers Managed by Docker Compose
@@ -300,12 +264,12 @@ docker ps
 docker inspect <conteiner-id> | grep compose
 ```
 
-## Step 09 - Accessing the Application
+## Step 07 - Accessing the Application
 
 - `EC2_Public-IP:8080` (WordPress)
 - `EC2_Public-IP:8081` (Python Upload Application)
 
-## Step 10 - Stopping, starting and pausing containers with Docker Compose:
+## Step 08 - Stopping, starting and pausing containers with Docker Compose:
 
 ```bash
 # Stops all running containers defined in the Compose file
@@ -349,7 +313,7 @@ docker compose ps
 
 </aside>
 
-## Step 11 - Checking Docker Compose logs
+## Step 09 - Checking Docker Compose logs
 
 ```bash
 # Displays logs from all services defined in the docker-compose.yml file
@@ -357,31 +321,31 @@ docker compose logs
 docker compose logs -f
 ```
 
-## Step 12 - Listing Containers
+## Step 10 - Listing Containers
 
 ```bash
 docker ps
 ```
 
-## Step 13 - Listing Images
+## Step 11 - Listing Images
 
 ```bash
 docker images
 ```
 
-## Step 14 - Listing Volumes
+## Step 12 - Listing Volumes
 
 ```bash
 docker volume ls
 ```
 
-## Step 15 - Listing Networks
+## Step 13 - Listing Networks
 
 ```bash
 docker network ls
 ```
 
-## Step 16 - Removing Services from Docker Compose
+## Step 14 - Removing Services from Docker Compose
 
 ```bash
 # Stops and removes all containers, networks, and volumes created by Docker Compose
