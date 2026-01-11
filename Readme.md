@@ -2,7 +2,7 @@
 
 ### 🛠️ Complete Deployment with Docker Compose: WordPress + MySQL + Python App
 
-In this hands-on, you'll learn how to install, configure and run multiple services with **Docker Compose**, making it easier to manage multi-container applications.
+To install, configure and run multiple services with **Docker Compose**, making it easier to manage multi-container applications.
 
 ### 🚀 What you'll do:
 
